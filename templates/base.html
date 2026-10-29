@@ -1,25 +1,32 @@
+{# Plantilla base: todas las demás páginas la heredan y solo cambian su contenido #}
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  {# Hace que la página se adapte al ancho del celular #}
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  {# Cada página puede cambiar el título del navegador #}
   <title>{% block titulo %}AulaRural{% endblock %}</title>
+  {# Tipografías Nunito (títulos) e Inter (texto) #}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+  {# Hoja de estilos del proyecto, desde la carpeta static #}
   <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
 </head>
 <body>
+  {# La barra de navegación solo aparece si el usuario inició sesión #}
   {% if user.is_authenticated %}
   <header class="barra">
     <a class="marca" href="{% url 'panel' %}">AulaRural</a>
     <nav class="menu">
       <a href="{% url 'panel' %}">Inicio</a>
-      <a href="#">Grupos</a>
-      <a href="#">Planeaciones</a>
-      <a href="#">Asistencia</a>
-      <a href="#">Informes</a>
+      <a href="{% url 'grupos' %}">Grupos</a>
+      <a href="{% url 'planeaciones' %}">Planeaciones</a>
+      <a href="{% url 'asistencia' %}">Asistencia</a>
+      <a href="{% url 'informes' %}">Informes</a>
     </nav>
+    {# Salir usa POST y token CSRF por seguridad #}
     <form method="post" action="{% url 'logout' %}">
       {% csrf_token %}
       <button class="boton boton-claro" type="submit">Salir</button>
@@ -28,11 +35,13 @@
   {% endif %}
 
   <main class="contenedor">
+    {# Mensajes de éxito, error o información enviados desde las vistas #}
     {% if messages %}
       {% for mensaje in messages %}
         <div class="mensaje mensaje-{{ mensaje.tags }}">{{ mensaje }}</div>
       {% endfor %}
     {% endif %}
+    {# Aquí cada página inserta su propio contenido #}
     {% block contenido %}{% endblock %}
   </main>
 </body>

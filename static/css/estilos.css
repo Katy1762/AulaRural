@@ -1,9 +1,11 @@
+/* ===== Paleta del proyecto =====
+   Se cambia aquí y afecta a todo el sitio */
 :root {
-  --verde: #2F6B4F;
-  --verde-oscuro: #1F4D38;
-  --ambar: #E9A23B;
-  --fondo: #FAF7F0;
-  --tarjeta: #FFFFFF;
+  --verde: #2F6B4F;         /* color principal: barra y botones */
+  --verde-oscuro: #1F4D38;  /* hover (cuando pasas el mouse) */
+  --ambar: #E9A23B;         /* acento: borde de las tarjetas */
+  --fondo: #FAF7F0;         /* crema del fondo */
+  --tarjeta: #FFFFFF;       /* fondo de tarjetas y formularios */
   --borde: #E6E1D5;
   --texto: #1F2A24;
   --texto-suave: #5C6B63;
@@ -12,8 +14,10 @@
   --info: #2F6FA3;
 }
 
+/* El ancho incluye relleno y borde, así nada se desborda */
 * { box-sizing: border-box; }
 
+/* ===== Estilos generales ===== */
 body {
   margin: 0;
   background: var(--fondo);
@@ -22,12 +26,14 @@ body {
   line-height: 1.5;
 }
 
+/* Títulos y marca usan la tipografía Nunito */
 h1, h2, .marca { font-family: 'Nunito', sans-serif; font-weight: 800; }
 
+/* Contenedor central: limita el ancho en pantallas grandes */
 .contenedor { max-width: 960px; margin: 0 auto; padding: 24px 16px; }
 .texto-suave { color: var(--texto-suave); }
 
-/* Barra superior */
+/* ===== Barra superior ===== */
 .barra {
   display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
   background: var(--verde); padding: 12px 16px;
@@ -39,7 +45,7 @@ h1, h2, .marca { font-family: 'Nunito', sans-serif; font-weight: 800; }
 }
 .menu a:hover { background: var(--verde-oscuro); }
 
-/* Botones */
+/* ===== Botones (alto mínimo de 44 px para que sean cómodos en celular) ===== */
 .boton {
   display: inline-block; min-height: 44px; padding: 10px 20px;
   background: var(--verde); color: #fff; border: 0; border-radius: 12px;
@@ -49,7 +55,8 @@ h1, h2, .marca { font-family: 'Nunito', sans-serif; font-weight: 800; }
 .boton-claro { background: #fff; color: var(--verde); }
 .boton-claro:hover { background: var(--fondo); }
 
-/* Tarjetas del panel */
+/* ===== Tarjetas del panel =====
+   grid con auto-fit: se acomodan solas según el ancho de la pantalla */
 .tarjetas {
   display: grid; gap: 16px; margin-top: 24px;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -64,7 +71,7 @@ h1, h2, .marca { font-family: 'Nunito', sans-serif; font-weight: 800; }
 .tarjeta h2 { margin: 0 0 4px; color: var(--verde); }
 .tarjeta p { margin: 0; color: var(--texto-suave); }
 
-/* Formularios y login */
+/* ===== Login y formularios ===== */
 .login {
   max-width: 400px; margin: 40px auto; background: var(--tarjeta);
   border: 1px solid var(--borde); border-radius: 14px; padding: 28px;
@@ -76,10 +83,11 @@ h1, h2, .marca { font-family: 'Nunito', sans-serif; font-weight: 800; }
   width: 100%; min-height: 44px; padding: 10px 12px;
   border: 1px solid var(--borde); border-radius: 10px; font-size: 1rem;
 }
+/* Borde ámbar cuando el campo está seleccionado */
 .formulario input:focus { outline: 2px solid var(--ambar); }
 .formulario .boton { width: 100%; margin-top: 20px; }
 
-/* Mensajes */
+/* ===== Mensajes: la clase depende del tipo (error, success, info) ===== */
 .mensaje { padding: 12px 16px; border-radius: 10px; margin-bottom: 16px; }
 .mensaje-error { background: #FBEAE8; color: var(--error); }
 .mensaje-success { background: #E3F4EA; color: var(--exito); }

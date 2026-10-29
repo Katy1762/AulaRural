@@ -1,13 +1,16 @@
+{# Panel principal: hereda la estructura de base.html #}
 {% extends 'base.html' %}
 {% block titulo %}Inicio · AulaRural{% endblock %}
 {% block contenido %}
+{# Saludo: usa el nombre del usuario o, si no tiene, su nombre de usuario #}
 <h1>Hola, {{ user.first_name|default:user.username }}</h1>
 <p class="texto-suave">¿Qué quieres hacer hoy?</p>
 
+{# Tarjetas de acceso a cada módulo #}
 <div class="tarjetas">
-  <a class="tarjeta" href="#"><h2>Grupos</h2><p>Estudiantes y cursos</p></a>
-  <a class="tarjeta" href="#"><h2>Planeaciones</h2><p>Prepara tus clases</p></a>
-  <a class="tarjeta" href="#"><h2>Asistencia</h2><p>Registra por fecha</p></a>
-  <a class="tarjeta" href="#"><h2>Informes</h2><p>Resumen por grupo</p></a>
+  <a class="tarjeta" href="{% url 'grupos' %}"><h2>Grupos</h2><p>Estudiantes y cursos</p></a>
+  <a class="tarjeta" href="{% url 'planeaciones' %}"><h2>Planeaciones</h2><p>Prepara tus clases</p></a>
+  <a class="tarjeta" href="{% url 'asistencia' %}"><h2>Asistencia</h2><p>Registra por fecha</p></a>
+  <a class="tarjeta" href="{% url 'informes' %}"><h2>Informes</h2><p>Resumen por grupo</p></a>
 </div>
 {% endblock %}

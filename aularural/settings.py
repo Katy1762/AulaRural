@@ -29,7 +29,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
+# Apps instaladas: las seis primeras vienen con Django, las demás son nuestros módulos
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,11 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cuentas',
-    'grupos',
-    'planeaciones',
-    'asistencia',
-    'informes',
+    'cuentas',        # login y panel principal
+    'grupos',         # grupos y estudiantes
+    'planeaciones',   # planeaciones académicas
+    'asistencia',     # registro de asistencia
+    'informes',       # resúmenes de asistencia
 ]
 
 
@@ -60,7 +60,8 @@ ROOT_URLCONF = 'aularural.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-         'DIRS': [BASE_DIR / 'templates'],
+        # Carpeta global donde Django busca base.html, panel.html, etc.
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
