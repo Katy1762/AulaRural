@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block titulo %}Iniciar sesión · AulaRural{% endblock %}
+{% block contenido %}
+<div class="login">
+  <h1>AulaRural</h1>
+  <p class="texto-suave">Organiza tu trabajo docente en un solo lugar.</p>
+
+  <form method="post" class="formulario">
+    {% csrf_token %}
+    {% if form.errors %}
+      <div class="mensaje mensaje-error">Usuario o contraseña incorrectos.</div>
+    {% endif %}
+    <label for="id_username">Usuario</label>
+    {{ form.username }}
+    <label for="id_password">Contraseña</label>
+    {{ form.password }}
+    <button class="boton" type="submit">Entrar</button>
+  </form>
+</div>
+{% endblock %}

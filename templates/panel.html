@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block titulo %}Inicio · AulaRural{% endblock %}
+{% block contenido %}
+<h1>Hola, {{ user.first_name|default:user.username }}</h1>
+<p class="texto-suave">¿Qué quieres hacer hoy?</p>
+
+<div class="tarjetas">
+  <a class="tarjeta" href="#"><h2>Grupos</h2><p>Estudiantes y cursos</p></a>
+  <a class="tarjeta" href="#"><h2>Planeaciones</h2><p>Prepara tus clases</p></a>
+  <a class="tarjeta" href="#"><h2>Asistencia</h2><p>Registra por fecha</p></a>
+  <a class="tarjeta" href="#"><h2>Informes</h2><p>Resumen por grupo</p></a>
+</div>
+{% endblock %}
