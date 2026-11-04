@@ -92,3 +92,39 @@ h1, h2, .marca { font-family: 'Nunito', sans-serif; font-weight: 800; }
 .mensaje-error { background: #FBEAE8; color: var(--error); }
 .mensaje-success { background: #E3F4EA; color: var(--exito); }
 .mensaje-info { background: #E6F0F8; color: var(--info); }
+
+/* ===== CRUD: encabezados, filtros y tablas ===== */
+a.boton { text-decoration: none; }  /* los enlaces con aspecto de botón no se subrayan */
+
+.encabezado { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; }
+.filtros { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+.filtros select, .filtros input {
+  min-height: 44px; padding: 8px 12px; border: 1px solid var(--borde);
+  border-radius: 10px; font-size: 1rem; background: #fff;
+}
+.tabla-contenedor { overflow-x: auto; }  /* en celular la tabla se desplaza */
+.tabla { width: 100%; border-collapse: collapse; background: var(--tarjeta); border-radius: 14px; overflow: hidden; }
+.tabla th { background: var(--verde); color: #fff; text-align: left; padding: 12px; }
+.tabla td { padding: 12px; border-top: 1px solid var(--borde); }
+.acciones a { margin-right: 12px; color: var(--verde); font-weight: 600; }
+
+/* Formularios largos, botones secundarios y de peligro */
+.formulario-ancho { max-width: 640px; }
+.formulario select, .formulario textarea {
+  width: 100%; padding: 10px 12px; border: 1px solid var(--borde);
+  border-radius: 10px; font-size: 1rem; font-family: inherit; background: #fff;
+}
+.formulario select { min-height: 44px; }
+.formulario textarea:focus, .formulario select:focus { outline: 2px solid var(--ambar); }
+.error-campo { color: var(--error); font-size: 0.9rem; margin-top: 4px; }
+.acciones-form { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.acciones-form .boton { width: auto; margin-top: 0; }
+.boton-secundario { background: #fff; color: var(--verde); border: 1px solid var(--verde); }
+.boton-secundario:hover { background: var(--fondo); }
+.boton-peligro { background: var(--error); }
+.boton-peligro:hover { background: #962d22; }
+.bloque { margin: 20px 0; }
+.bloque h2 { font-size: 1.1rem; margin-top: 16px; }
+
+/* El campo de semana necesita un poco más de ancho para mostrar su texto */
+.filtros input[type="number"] { width: 120px; }

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block titulo %}{{ titulo }} · AulaRural{% endblock %}
+{% block contenido %}
+<h1>{{ titulo }}</h1>
+
+<form method="post" class="formulario formulario-ancho">
+  {% csrf_token %}
+  {# Errores que afectan a todo el formulario (por ejemplo, planeación repetida) #}
+  {% for error in form.non_field_errors %}
+    <div class="mensaje mensaje-error">{{ error }}</div>
+  {% endfor %}
+  {# Cada campo con su etiqueta y sus errores #}
+  {% for campo in form %}
+    <label for="{{ campo.id_for_label }}">{{ campo.label }}</label>
+    {{ campo }}
+    {% for error in campo.errors %}
+      <div class="error-campo">{{ error }}</div>
+    {% endfor %}
+  {% endfor %}
+  <div class="acciones-form">
+    <button class="boton" type="submit">Guardar</button>
+    <a class="boton boton-secundario" href="{% url 'planeaciones' %}">Cancelar</a>
+  </div>
+</form>
+{% endblock %}

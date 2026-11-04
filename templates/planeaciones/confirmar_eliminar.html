@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block titulo %}Eliminar planeación · AulaRural{% endblock %}
+{% block contenido %}
+<h1>Eliminar planeación</h1>
+<div class="tarjeta bloque">
+  <p>¿Seguro que quieres eliminar la planeación de <strong>{{ planeacion.asignatura }}</strong>,
+  grado {{ planeacion.grado }}, semana {{ planeacion.semana }}? Esta acción no se puede deshacer.</p>
+  <form method="post" class="acciones-form">
+    {% csrf_token %}
+    <button class="boton boton-peligro" type="submit">Sí, eliminar</button>
+    <a class="boton boton-secundario" href="{% url 'planeaciones' %}">Cancelar</a>
+  </form>
+</div>
+{% endblock %}
