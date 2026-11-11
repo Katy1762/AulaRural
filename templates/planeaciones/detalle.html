@@ -1,19 +1,54 @@
 {% extends 'base.html' %}
-{% block titulo %}Planeación · AulaRural{% endblock %}
+{% block titulo %}{{ grupo.nombre }}{% endblock %}
 {% block contenido %}
-<h1>{{ planeacion.asignatura }} · {{ planeacion.grado }}</h1>
-<p class="texto-suave">Semana {{ planeacion.semana }} · creada el {{ planeacion.creada|date:"d/m/Y" }}</p>
+{% with es_directivo=request.user.perfil.rol %}
+<div class="encabezado">
+  <h1>{{ grupo.nombre }}</h1>
+  <div class="acciones">
+    {% if es_directivo != 'directivo' %}
+      <a class="boton-secundario" href="{% url 'grupo_editar' grupo.pk %}">Editar grupo</a>
+    {% endif %}
+    <a class="boton-claro" href="{% url 'grupos' %}">Volver</a>
+  </div>
+</div>
+<p>
+  Grado: {{ grupo.grado }} · Año: {{ grupo.anio }}
+  {% if es_directivo == 'directivo' %} · Docente: {{ grupo.docente.username }}{% endif %}
+</p>
 
-<div class="tarjeta bloque">
-  <h2>Objetivos</h2><p>{{ planeacion.objetivos|linebreaksbr }}</p>
-  <h2>Temas</h2><p>{{ planeacion.temas|linebreaksbr }}</p>
-  <h2>Actividades</h2><p>{{ planeacion.actividades|linebreaksbr }}</p>
-  <h2>Recursos</h2><p>{{ planeacion.recursos|linebreaksbr|default:"Sin recursos registrados." }}</p>
+<div class="encabezado">
+  <h2>Estudiantes ({{ estudiantes|length }})</h2>
+  {% if es_directivo != 'directivo' %}
+    <a class="boton" href="{% url 'estudiante_crear' grupo.pk %}">Agregar estudiante</a>
+  {% endif %}
 </div>
 
-<div class="acciones-form">
-  <a class="boton" href="{% url 'planeacion_editar' planeacion.pk %}">Editar</a>
-  <a class="boton boton-peligro" href="{% url 'planeacion_eliminar' planeacion.pk %}">Eliminar</a>
-  <a class="boton boton-secundario" href="{% url 'planeaciones' %}">Volver al listado</a>
+{% if estudiantes %}
+<div class="tabla-contenedor">
+  <table class="tabla">
+    <thead>
+      <tr>
+        <th>Apellidos</th><th>Nombres</th><th>Código</th>
+        {% if es_directivo != 'directivo' %}<th>Acciones</th>{% endif %}
+      </tr>
+    </thead>
+    <tbody>
+    {% for e in estudiantes %}
+      <tr>
+        <td>{{ e.apellidos }}</td><td>{{ e.nombres }}</td><td>{{ e.codigo }}</td>
+        {% if es_directivo != 'directivo' %}
+        <td class="acciones">
+          <a class="boton-secundario" href="{% url 'estudiante_editar' e.pk %}">Editar</a>
+          <a class="boton-peligro" href="{% url 'estudiante_eliminar' e.pk %}">Eliminar</a>
+        </td>
+        {% endif %}
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
 </div>
+{% else %}
+<p>Este grupo aún no tiene estudiantes.</p>
+{% endif %}
+{% endwith %}
 {% endblock %}

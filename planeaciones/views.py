@@ -2,6 +2,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
+from cuentas.permisos import es_directivo, solo_docente
+
 from .forms import PlaneacionForm
 from .models import Asignatura, Planeacion
 
@@ -11,10 +13,17 @@ def _propias(request):
     return Planeacion.objects.filter(docente=request.user).select_related('asignatura')
 
 
+def _visibles(request):
+    """El directivo ve todas (solo lectura); el docente, solo las suyas."""
+    if es_directivo(request.user):
+        return Planeacion.objects.select_related('asignatura', 'docente').all()
+    return _propias(request)
+
+
 @login_required
 def lista(request):
     # CONSULTAR: listado con filtros opcionales
-    planeaciones = _propias(request)
+    planeaciones = _visibles(request)
     asignatura = request.GET.get('asignatura', '')
     grado = request.GET.get('grado', '').strip()
     semana = request.GET.get('semana', '').strip()
@@ -35,12 +44,13 @@ def lista(request):
 
 @login_required
 def detalle(request, pk):
-    # get_object_or_404 con docente=request.user: no se ven planeaciones ajenas
-    planeacion = get_object_or_404(_propias(request), pk=pk)
+    # El directivo puede ver cualquiera; el docente, solo las suyas
+    planeacion = get_object_or_404(_visibles(request), pk=pk)
     return render(request, 'planeaciones/detalle.html', {'planeacion': planeacion})
 
 
 @login_required
+@solo_docente
 def crear(request):
     # CREAR
     if request.method == 'POST':
@@ -59,8 +69,9 @@ def crear(request):
 
 
 @login_required
+@solo_docente
 def editar(request, pk):
-    # EDITAR
+    # EDITAR: solo las propias
     planeacion = get_object_or_404(_propias(request), pk=pk)
     if request.method == 'POST':
         form = PlaneacionForm(request.POST, instance=planeacion, docente=request.user)
@@ -76,6 +87,7 @@ def editar(request, pk):
 
 
 @login_required
+@solo_docente
 def eliminar(request, pk):
     # ELIMINAR: primero pide confirmación (GET) y borra solo con POST
     planeacion = get_object_or_404(_propias(request), pk=pk)
