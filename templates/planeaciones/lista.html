@@ -1,47 +1,72 @@
 {% extends 'base.html' %}
-{% block titulo %}Grupos{% endblock %}
+{% block titulo %}Planeaciones · AulaRural{% endblock %}
 {% block contenido %}
 {% with es_directivo=request.user.perfil.rol %}
 <div class="encabezado">
-  <h1>{% if es_directivo == 'directivo' %}Todos los grupos{% else %}Mis grupos{% endif %}</h1>
+  <h1>{% if es_directivo == 'directivo' %}Todas las planeaciones{% else %}Mis planeaciones{% endif %}</h1>
   {% if es_directivo != 'directivo' %}
-    <a class="boton" href="{% url 'grupo_crear' %}">Nuevo grupo</a>
+    <a class="boton" href="{% url 'planeacion_crear' %}">Nueva planeación</a>
   {% endif %}
 </div>
 
 {% if es_directivo == 'directivo' %}
-  <p class="mensaje info">Modo consulta: ves los grupos de todos los docentes.</p>
+  <p class="mensaje info">Modo consulta: ves las planeaciones de todos los docentes.</p>
 {% endif %}
 
-{% if grupos %}
+{# Filtros por asignatura, grado y semana #}
+<form method="get" class="filtros">
+  <select name="asignatura">
+    <option value="">Todas las asignaturas</option>
+    {% for a in asignaturas %}
+      <option value="{{ a.id }}" {% if filtro_asignatura == a.id|stringformat:"s" %}selected{% endif %}>{{ a.nombre }}</option>
+    {% endfor %}
+  </select>
+  <input type="text" name="grado" placeholder="Grado" value="{{ filtro_grado }}">
+  <input type="number" name="semana" placeholder="Semana" min="1" max="52" value="{{ filtro_semana }}">
+  <button class="boton" type="submit">Filtrar</button>
+  <a class="boton boton-secundario" href="{% url 'planeaciones' %}">Limpiar</a>
+</form>
+
+{% if planeaciones %}
 <div class="tabla-contenedor">
   <table class="tabla">
     <thead>
       <tr>
-        <th>Nombre</th><th>Grado</th><th>Año</th>
+        <th>Asignatura</th>
+        <th>Grado</th>
+        <th>Semana</th>
         {% if es_directivo == 'directivo' %}<th>Docente</th>{% endif %}
+        <th>Creada</th>
         <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
-    {% for g in grupos %}
+      {% for p in planeaciones %}
       <tr>
-        <td>{{ g.nombre }}</td><td>{{ g.grado }}</td><td>{{ g.anio }}</td>
-        {% if es_directivo == 'directivo' %}<td>{{ g.docente.username }}</td>{% endif %}
+        <td>{{ p.asignatura }}</td>
+        <td>{{ p.grado }}</td>
+        <td>{{ p.semana }}</td>
+        {% if es_directivo == 'directivo' %}<td>{{ p.docente.username }}</td>{% endif %}
+        <td>{{ p.creada|date:"d/m/Y" }}</td>
         <td class="acciones">
-          <a class="boton-claro" href="{% url 'grupo_detalle' g.pk %}">Ver</a>
+          <a href="{% url 'planeacion_detalle' p.pk %}">Ver</a>
           {% if es_directivo != 'directivo' %}
-            <a class="boton-secundario" href="{% url 'grupo_editar' g.pk %}">Editar</a>
-            <a class="boton-peligro" href="{% url 'grupo_eliminar' g.pk %}">Eliminar</a>
+            <a href="{% url 'planeacion_editar' p.pk %}">Editar</a>
+            <a href="{% url 'planeacion_eliminar' p.pk %}">Eliminar</a>
           {% endif %}
         </td>
       </tr>
-    {% endfor %}
+      {% endfor %}
     </tbody>
   </table>
 </div>
 {% else %}
-<p>{% if es_directivo == 'directivo' %}Todavía no hay grupos registrados.{% else %}Aún no tienes grupos. Crea el primero.{% endif %}</p>
+<div class="tarjeta">
+  <h2>Aún no hay planeaciones</h2>
+  {% if es_directivo != 'directivo' %}
+    <p>Crea la primera con el botón «Nueva planeación».</p>
+  {% endif %}
+</div>
 {% endif %}
 {% endwith %}
 {% endblock %}
