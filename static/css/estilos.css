@@ -128,3 +128,34 @@ a.boton { text-decoration: none; }  /* los enlaces con aspecto de botón no se s
 
 /* El campo de semana necesita un poco más de ancho para mostrar su texto */
 .filtros input[type="number"] { width: 120px; }
+
+
+.formulario .acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+a.boton-secundario,
+a.boton-claro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+a.boton-secundario {
+  border: 2px solid #2F6B4F;
+  color: #2F6B4F;
+  background: transparent;
+}
+
+a.boton-secundario:hover {
+  background: #2F6B4F;
+  color: #FFFFFF;
+}

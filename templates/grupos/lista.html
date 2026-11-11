@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block titulo %}Grupos{% endblock %}
+{% block contenido %}
+<div class="encabezado">
+  <h1>Mis grupos</h1>
+  <a class="boton" href="{% url 'grupo_crear' %}">Nuevo grupo</a>
+</div>
+{% if grupos %}
+<div class="tabla-contenedor">
+  <table class="tabla">
+    <thead><tr><th>Nombre</th><th>Grado</th><th>Año</th><th>Acciones</th></tr></thead>
+    <tbody>
+    {% for g in grupos %}
+      <tr>
+        <td>{{ g.nombre }}</td><td>{{ g.grado }}</td><td>{{ g.anio }}</td>
+        <td class="acciones">
+          <a class="boton-claro" href="{% url 'grupo_detalle' g.pk %}">Ver</a>
+          <a class="boton-secundario" href="{% url 'grupo_editar' g.pk %}">Editar</a>
+          <a class="boton-peligro" href="{% url 'grupo_eliminar' g.pk %}">Eliminar</a>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p>Aún no tienes grupos. Crea el primero.</p>
+{% endif %}
+{% endblock %}
