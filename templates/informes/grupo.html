@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block titulo %}Informe · {{ grupo.nombre }}{% endblock %}
+{% block contenido %}
+
+{# Título y botón para volver #}
+<div class="encabezado">
+  <h1>Informe · {{ grupo.nombre }}</h1>
+  <div class="acciones">
+    <a class="boton-claro" href="{% url 'informes' %}">Volver</a>
+  </div>
+</div>
+
+{# Filtro por rango de fechas (opcional) #}
+<form method="get" class="filtros">
+  <label for="desde">Desde</label>
+  <input type="date" id="desde" name="desde" value="{{ desde|date:'Y-m-d' }}">
+  <label for="hasta">Hasta</label>
+  <input type="date" id="hasta" name="hasta" value="{{ hasta|date:'Y-m-d' }}">
+  <button class="boton" type="submit">Filtrar</button>
+  <a class="boton boton-secundario" href="{% url 'informe_grupo' grupo.pk %}">Limpiar</a>
+</form>
+
+{# Resumen general del grupo #}
+<div class="tarjeta bloque">
+  <h2>Resumen del grupo</h2>
+  {% if resumen.total %}
+    <p>
+      Registros: {{ resumen.total }} ·
+      Asistió: {{ resumen.asistio }} ·
+      Ausente: {{ resumen.ausente }} ·
+      Tardanza: {{ resumen.tardanza }}
+    </p>
+    <p><strong>Asistencia del grupo: {{ resumen.porcentaje }}%</strong></p>
+  {% else %}
+    <p>No hay asistencia registrada en este periodo.</p>
+  {% endif %}
+</div>
+
+{# Tabla por estudiante #}
+{% if filas %}
+<div class="tabla-contenedor">
+  <table class="tabla">
+    <thead>
+      <tr>
+        <th>Estudiante</th><th>Asistió</th><th>Ausente</th><th>Tardanza</th><th>Total</th><th>% asistencia</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for f in filas %}
+      <tr>
+        <td>{{ f.estudiante }}</td>
+        <td>{{ f.asistio }}</td>
+        <td>{{ f.ausente }}</td>
+        <td>{{ f.tardanza }}</td>
+        <td>{{ f.total }}</td>
+        <td>{% if f.porcentaje is None %}—{% else %}{{ f.porcentaje }}%{% endif %}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{# Cómo se calcula el porcentaje #}
+<p class="texto-suave">El porcentaje cuenta la tardanza como asistencia: (asistió + tardanza) ÷ total de registros.</p>
+{% else %}
+<p>Este grupo aún no tiene estudiantes.</p>
+{% endif %}
+
+{% endblock %}

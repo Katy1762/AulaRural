@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block titulo %}Eliminar grupo{% endblock %}
+{% block contenido %}
+
+{# confirmar antes de borrar el grupo #}
+<h1>Eliminar grupo</h1>
+<p>¿Seguro que quieres eliminar <strong>{{ grupo.nombre}}</strong>? Tambien se borraran sus estudiante y su asistencia.</p>
+
+
+{# El borrado solo ocurre con POST #}
+<form method="post" class="acciones-form">
+  {% csrf_token %}
+  <button type="submit" class="boton boton-peligro">Si, eliminar</button>
+  <a class="boton boton-secundario" href="{% url 'grupo_detalle' grupo.pk %}">Cancelar</a>
+</form>
+
+{% endblock %}

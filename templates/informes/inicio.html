@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block titulo %}Informes{% endblock %}
+{% block contenido %}
+{# Rol del usuario, para el aviso y la columna de docente #}
+{% with es_directivo=request.user.perfil.rol %}
+
+<h1>Informes de asistencia</h1>
+
+{# Aviso según el rol #}
+{% if es_directivo == 'directivo' %}
+  <p class="mensaje mensaje-info">Modo consulta: puedes ver los informes de todos los grupos.</p>
+{% else %}
+  <p>Elige un grupo para ver su informe.</p>
+{% endif %}
+
+{# Tabla de grupos con enlace al informe #}
+{% if grupos %}
+<div class="tabla-contenedor">
+  <table class="tabla">
+    <thead>
+      <tr>
+        <th>Grupo</th><th>Grado</th><th>Año</th>
+        {% if es_directivo == 'directivo' %}<th>Docente</th>{% endif %}
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for g in grupos %}
+      <tr>
+        <td>{{ g.nombre }}</td><td>{{ g.grado }}</td><td>{{ g.anio }}</td>
+        {% if es_directivo == 'directivo' %}<td>{{ g.docente.username }}</td>{% endif %}
+        <td class="acciones">
+          <a class="boton-claro" href="{% url 'informe_grupo' g.pk %}">Ver informe</a>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p>Todavía no hay grupos registrados.</p>
+{% endif %}
+
+{% endwith %}
+{% endblock %}

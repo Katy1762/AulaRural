@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block titulo %}Asistencia{% endblock %}
+{% block contenido %}
+{% with es_directivo=request.user.perfil.rol %}
+<div class="encabezado">
+  <h1>Asistencia</h1>
+</div>
+
+{% if es_directivo == 'directivo' %}
+  <p class="mensaje info">Modo consulta: puedes ver la asistencia de todos los grupos.</p>
+{% else %}
+  <p>Elige un grupo para registrar la asistencia de hoy.</p>
+{% endif %}
+
+{% if grupos %}
+<div class="tabla-contenedor">
+  <table class="tabla">
+    <thead>
+      <tr>
+        <th>Grupo</th><th>Grado</th><th>Año</th>
+        {% if es_directivo == 'directivo' %}<th>Docente</th>{% endif %}
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for g in grupos %}
+      <tr>
+        <td>{{ g.nombre }}</td><td>{{ g.grado }}</td><td>{{ g.anio }}</td>
+        {% if es_directivo == 'directivo' %}<td>{{ g.docente.username }}</td>{% endif %}
+        <td class="acciones">
+          <a class="boton-claro" href="{% url 'asistencia_tomar' g.pk %}?fecha={{ hoy|date:'Y-m-d' }}">
+            {% if es_directivo == 'directivo' %}Ver asistencia{% else %}Registrar hoy{% endif %}
+          </a>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p>Todavía no hay grupos. Crea uno en la sección Grupos.</p>
+{% endif %}
+{% endwith %}
+{% endblock %}

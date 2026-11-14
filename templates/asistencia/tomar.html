@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block titulo %}Asistencia · {{ grupo.nombre }}{% endblock %}
+{% block contenido %}
+{# Título y botón para volver #}
+<div class="encabezado">
+  <h1>Asistencia · {{ grupo.nombre }}</h1>
+  <div class="acciones">
+    <a class="boton-claro" href="{% url 'asistencia' %}">Volver</a>
+  </div>
+</div>
+
+{% if solo_lectura %}
+  <p class="mensaje info">Modo consulta: no puedes modificar la asistencia. Docente: {{ grupo.docente.username }}.</p>
+{% endif %}
+
+<form method="get" class="filtros">
+  <label for="fecha">Fecha</label>
+  <input type="date" id="fecha" name="fecha" value="{{ fecha|date:'Y-m-d' }}" max="{{ hoy|date:'Y-m-d' }}">
+  <button class="boton" type="submit">Ver fecha</button>
+</form>
+
+{% if ya_registrada %}
+  <p class="mensaje info">Ya hay asistencia guardada para el {{ fecha|date:"d/m/Y" }}. Si guardas, se actualiza.</p>
+{% else %}
+  <p>Aún no hay asistencia guardada para el {{ fecha|date:"d/m/Y" }}.</p>
+{% endif %}
+
+{% if filas %}
+<form method="post" class="formulario-ancho">
+  {% csrf_token %}
+  <input type="hidden" name="fecha" value="{{ fecha|date:'Y-m-d' }}">
+  <div class="tabla-contenedor">
+    <table class="tabla">
+      <thead><tr><th>Estudiante</th><th>Estado</th></tr></thead>
+      <tbody>
+      {% for fila in filas %}
+        <tr>
+          <td>{{ fila.estudiante }}</td>
+          <td>
+            <div class="opciones-asistencia">
+              {% for valor, etiqueta in estados %}
+                <label>
+                  <input type="radio" name="estado_{{ fila.estudiante.pk }}" value="{{ valor }}"
+                         {% if fila.estado == valor %}checked{% endif %}
+                         {% if solo_lectura %}disabled{% endif %}>
+                  {{ etiqueta }}
+                </label>
+              {% endfor %}
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% if not solo_lectura %}
+    <div class="acciones-form">
+      <button type="submit" class="boton">Guardar asistencia</button>
+    </div>
+  {% endif %}
+</form>
+{% else %}
+  <p>Este grupo aún no tiene estudiantes. Agrégalos desde la sección Grupos.</p>
+{% endif %}
+{% endblock %}

@@ -1,22 +1,62 @@
 {% extends 'base.html' %}
-{% block titulo %}{{ titulo }}{% endblock %}
+{% block titulo %}{{ grupo.nombre }}{% endblock %}
 {% block contenido %}
-<h1>{{ titulo }}</h1>
-<form method="post" class="formulario">
-  {% csrf_token %}
-  {% if form.non_field_errors %}
-    <div class="mensaje error">{{ form.non_field_errors }}</div>
-  {% endif %}
-  {% for campo in form %}
-    <div class="bloque">
-      {{ campo.label_tag }}
-      {{ campo }}
-      {% for e in campo.errors %}<p class="error-campo">{{ e }}</p>{% endfor %}
-    </div>
-  {% endfor %}
+{# Rol del usuario, para ocultar botones al directivo #}
+{% with es_directivo=request.user.perfil.rol %}
+
+{# Título y acciones del grupo #}
+<div class="encabezado">
+  <h1>{{ grupo.nombre }}</h1>
   <div class="acciones">
-    <button type="submit" class="boton">Guardar</button>
-    <a class="boton-claro" href="{% url 'grupos' %}">Cancelar</a>
+    {% if es_directivo != 'directivo' %}
+      <a class="boton-secundario" href="{% url 'grupo_editar' grupo.pk %}">Editar grupo</a>
+    {% endif %}
+    <a class="boton-claro" href="{% url 'grupos' %}">Volver</a>
   </div>
-</form>
+</div>
+
+{# Datos del grupo; el directivo ve además el docente #}
+<p>
+  Grado: {{ grupo.grado }} · Año: {{ grupo.anio }}
+  {% if es_directivo == 'directivo' %} · Docente: {{ grupo.docente.username }}{% endif %}
+</p>
+
+{# Encabezado de estudiantes con botón de agregar #}
+<div class="encabezado">
+  <h2>Estudiantes ({{ estudiantes|length }})</h2>
+  {% if es_directivo != 'directivo' %}
+    <a class="boton" href="{% url 'estudiante_crear' grupo.pk %}">Agregar estudiante</a>
+  {% endif %}
+</div>
+
+{# Tabla de estudiantes, o aviso si no hay #}
+{% if estudiantes %}
+<div class="tabla-contenedor">
+  <table class="tabla">
+    <thead>
+      <tr>
+        <th>Apellidos</th><th>Nombres</th><th>Código</th>
+        {% if es_directivo != 'directivo' %}<th>Acciones</th>{% endif %}
+      </tr>
+    </thead>
+    <tbody>
+    {% for e in estudiantes %}
+      <tr>
+        <td>{{ e.apellidos }}</td><td>{{ e.nombres }}</td><td>{{ e.codigo }}</td>
+        {% if es_directivo != 'directivo' %}
+        <td class="acciones">
+          <a class="boton-secundario" href="{% url 'estudiante_editar' e.pk %}">Editar</a>
+          <a class="boton-peligro" href="{% url 'estudiante_eliminar' e.pk %}">Eliminar</a>
+        </td>
+        {% endif %}
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p>Este grupo aún no tiene estudiantes.</p>
+{% endif %}
+
+{% endwith %}
 {% endblock %}
