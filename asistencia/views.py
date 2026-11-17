@@ -67,8 +67,11 @@ def tomar(request, grupo_pk):
         a.estudiante_id: a.estado
         for a in Asistencia.objects.filter(estudiante__in=estudiantes, fecha=fecha)
     }
+        # Sin registro: el docente ve "Asistió" marcado por comodidad;
+    # el directivo no ve nada marcado para no confundirlo con un dato real
+    estado_por_defecto = None if solo_lectura else Asistencia.ASISTIO
     filas = [
-        {'estudiante': e, 'estado': existentes.get(e.pk, Asistencia.ASISTIO)}
+        {'estudiante': e, 'estado': existentes.get(e.pk, estado_por_defecto)}
         for e in estudiantes
     ]
     return render(request, 'asistencia/tomar.html', {

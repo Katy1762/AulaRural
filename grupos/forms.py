@@ -62,5 +62,5 @@ class EstudianteForm(forms.ModelForm):
             if self.instance.pk:
                 repetido = repetido.exclude(pk=self.instance.pk)       
             if repetido.exists():
-                raise forms.ValidationError('Ya hay un estudiante con ese cÃ³digo en este grupo.')
+                raise forms.ValidationError('Ya hay un estudiante con ese código en este grupo.')
         return codigo
