@@ -4,3 +4,7 @@ mysqlclient==2.3.0
 python-dotenv==1.2.4
 sqlparse==0.6.0
 tzdata==2026.6
+
+
+pytest==9.2.0
+pytest-django==4.14.0
