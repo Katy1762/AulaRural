@@ -15,6 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 # Archivo principal de rutas: reparte cada dirección hacia la app que la atiende
+from cuentas import pwa
 from django.contrib import admin
 from django.urls import path, include
 
@@ -25,4 +26,7 @@ urlpatterns = [
     path('asistencia/', include('asistencia.urls')),      # /asistencia/
     path('informes/', include('informes.urls')),          # /informes/
     path('', include('cuentas.urls')),                    # inicio, login y logout (va al final)
+    path('manifest.webmanifest', pwa.manifiesto, name='manifiesto'),
+    path('sw.js', pwa.service_worker, name='sw'),
+    path('sin-conexion/', pwa.sin_conexion, name='sin_conexion'),
 ]

@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sin conexión · AulaRural</title>
+  <meta name="theme-color" content="#2F6B4F">
+  <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+</head>
+<body>
+  {# Página independiente: no usa base.html para no depender de la sesión #}
+  <main class="contenedor">
+    <h1>Sin conexión</h1>
+    <p>No hay internet en este momento. Cuando vuelva la conexión, intenta de nuevo.</p>
+    <button class="boton" onclick="location.reload()">Reintentar</button>
+  </main>
+</body>
+</html>
