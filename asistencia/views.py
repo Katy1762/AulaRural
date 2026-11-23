@@ -7,8 +7,10 @@ from django.db import transaction
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.http import JsonResponse
+from django.views.decorators.cache import never_cache
 
-from cuentas.permisos import es_directivo
+from cuentas.permisos import es_directivo, solo_docente
 from grupos.models import Grupo
 
 from .models import Asistencia
@@ -80,6 +82,28 @@ def tomar(request, grupo_pk):
         'hoy': hoy,
         'filas': filas,
         'estados': Asistencia.ESTADOS,
-        'ya_registrada': bool(existentes),
+                'ya_registrada': bool(existentes),
         'solo_lectura': solo_lectura,
     })
+
+
+# Entrega los grupos y estudiantes del docente para usarlos sin conexión
+@login_required
+@solo_docente
+@never_cache
+def datos_sin_conexion(request):
+    grupos = Grupo.objects.filter(docente=request.user).prefetch_related('estudiantes')
+    datos = [
+        {
+            'id': g.pk,
+            'nombre': g.nombre,
+            'grado': g.grado,
+            'anio': g.anio,
+            'estudiantes': [
+                {'id': e.pk, 'nombres': e.nombres, 'apellidos': e.apellidos, 'codigo': e.codigo}
+                for e in g.estudiantes.all()
+            ],
+        }
+        for g in grupos
+    ]
+    return JsonResponse({'grupos': datos})
