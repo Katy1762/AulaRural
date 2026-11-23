@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block titulo %}Asistencia{% endblock %}
 {% block contenido %}
 {% with es_directivo=request.user.perfil.rol %}
@@ -10,6 +11,12 @@
   <p class="mensaje info">Modo consulta: puedes ver la asistencia de todos los grupos.</p>
 {% else %}
   <p>Elige un grupo para registrar la asistencia de hoy.</p>
+
+  {# Guarda grupos y estudiantes en el navegador para usarlos sin conexión #}
+  <div class="tarjeta">
+    <button type="button" id="btn-preparar" class="boton">Preparar para usar sin conexión</button>
+    <p id="estado-preparar" class="texto-suave"></p>
+  </div>
 {% endif %}
 
 {% if grupos %}
@@ -39,6 +46,10 @@
 </div>
 {% else %}
 <p>Todavía no hay grupos. Crea uno en la sección Grupos.</p>
+{% endif %}
+{# Script del modo sin conexión: solo para el docente #}
+{% if es_directivo != 'directivo' %}
+<script src="{% static 'js/sin_conexion.js' %}"></script>
 {% endif %}
 {% endwith %}
 {% endblock %}
