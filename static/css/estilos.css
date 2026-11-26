@@ -15,7 +15,9 @@
 }
 
 /* El ancho incluye relleno y borde, así nada se desborda */
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 /* ===== Estilos generales ===== */
 body {
@@ -27,108 +29,318 @@ body {
 }
 
 /* Títulos y marca usan la tipografía Nunito */
-h1, h2, .marca { font-family: 'Nunito', sans-serif; font-weight: 800; }
+h1, h2, .marca {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+}
 
 /* Contenedor central: limita el ancho en pantallas grandes */
-.contenedor { max-width: 960px; margin: 0 auto; padding: 24px 16px; }
-.texto-suave { color: var(--texto-suave); }
+.contenedor {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.texto-suave {
+  color: var(--texto-suave);
+}
 
 /* ===== Barra superior ===== */
 .barra {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
-  background: var(--verde); padding: 12px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  background: var(--verde);
+  padding: 12px 16px;
 }
-.marca { color: #fff; text-decoration: none; font-size: 1.4rem; }
-.menu { display: flex; flex-wrap: wrap; gap: 4px; flex: 1; }
+
+.marca {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.4rem;
+}
+
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  flex: 1;
+}
+
 .menu a {
-  color: #fff; text-decoration: none; padding: 8px 12px; border-radius: 10px;
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 10px;
+  transition: background 0.15s ease;
 }
-.menu a:hover { background: var(--verde-oscuro); }
+
+.menu a:hover {
+  background: var(--verde-oscuro);
+}
 
 /* ===== Botones (alto mínimo de 44 px para que sean cómodos en celular) ===== */
 .boton {
-  display: inline-block; min-height: 44px; padding: 10px 20px;
-  background: var(--verde); color: #fff; border: 0; border-radius: 12px;
-  font-weight: 600; font-size: 1rem; cursor: pointer;
+  display: inline-block;
+  min-height: 44px;
+  padding: 10px 20px;
+  background: var(--verde);
+  color: #fff;
+  border: 0;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
 }
-.boton:hover { background: var(--verde-oscuro); }
-.boton-claro { background: #fff; color: var(--verde); }
-.boton-claro:hover { background: var(--fondo); }
+
+.boton:hover {
+  background: var(--verde-oscuro);
+}
+
+.boton-claro {
+  background: #fff;
+  color: var(--verde);
+}
+
+.boton-claro:hover {
+  background: var(--fondo);
+}
+
+a.boton {
+  text-decoration: none; /* los enlaces con aspecto de botón no se subrayan */
+}
 
 /* ===== Tarjetas del panel =====
    grid con auto-fit: se acomodan solas según el ancho de la pantalla */
 .tarjetas {
-  display: grid; gap: 16px; margin-top: 24px;
+  display: grid;
+  gap: 16px;
+  margin-top: 24px;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
+
 .tarjeta {
-  display: block; background: var(--tarjeta); border: 1px solid var(--borde);
-  border-radius: 14px; padding: 20px; text-decoration: none; color: inherit;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: block;
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
   border-top: 5px solid var(--ambar);
+  border-radius: 14px;
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
-.tarjeta:hover { transform: translateY(-2px); }
-.tarjeta h2 { margin: 0 0 4px; color: var(--verde); }
-.tarjeta p { margin: 0; color: var(--texto-suave); }
+
+.tarjeta:hover {
+  transform: translateY(-2px);
+}
+
+.tarjeta h2 {
+  margin: 0 0 4px;
+  color: var(--verde);
+}
+
+.tarjeta p {
+  margin: 0;
+  color: var(--texto-suave);
+}
 
 /* ===== Login y formularios ===== */
 .login {
-  max-width: 400px; margin: 40px auto; background: var(--tarjeta);
-  border: 1px solid var(--borde); border-radius: 14px; padding: 28px;
+  max-width: 400px;
+  margin: 40px auto;
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  padding: 28px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
-.login h1 { color: var(--verde); margin-top: 0; }
-.formulario label { display: block; margin: 16px 0 6px; font-weight: 600; }
-.formulario input {
-  width: 100%; min-height: 44px; padding: 10px 12px;
-  border: 1px solid var(--borde); border-radius: 10px; font-size: 1rem;
+
+.login h1 {
+  color: var(--verde);
+  margin-top: 0;
 }
+
+.formulario label {
+  display: block;
+  margin: 16px 0 6px;
+  font-weight: 600;
+}
+
+.formulario input {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
 /* Borde ámbar cuando el campo está seleccionado */
-.formulario input:focus { outline: 2px solid var(--ambar); }
-.formulario .boton { width: 100%; margin-top: 20px; }
+.formulario input:focus {
+  outline: 2px solid var(--ambar);
+}
+
+.formulario .boton {
+  width: 100%;
+  margin-top: 20px;
+}
 
 /* ===== Mensajes: la clase depende del tipo (error, success, info) ===== */
-.mensaje { padding: 12px 16px; border-radius: 10px; margin-bottom: 16px; }
-.mensaje-error { background: #FBEAE8; color: var(--error); }
-.mensaje-success { background: #E3F4EA; color: var(--exito); }
-.mensaje-info { background: #E6F0F8; color: var(--info); }
+.mensaje {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+.mensaje-error {
+  background: #FBEAE8;
+  color: var(--error);
+}
+
+.mensaje-success {
+  background: #E3F4EA;
+  color: var(--exito);
+}
+
+.mensaje-info {
+  background: #E6F0F8;
+  color: var(--info);
+}
 
 /* ===== CRUD: encabezados, filtros y tablas ===== */
-a.boton { text-decoration: none; }  /* los enlaces con aspecto de botón no se subrayan */
-
-.encabezado { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; }
-.filtros { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
-.filtros select, .filtros input {
-  min-height: 44px; padding: 8px 12px; border: 1px solid var(--borde);
-  border-radius: 10px; font-size: 1rem; background: #fff;
+.encabezado {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
 }
-.tabla-contenedor { overflow-x: auto; }  /* en celular la tabla se desplaza */
-.tabla { width: 100%; border-collapse: collapse; background: var(--tarjeta); border-radius: 14px; overflow: hidden; }
-.tabla th { background: var(--verde); color: #fff; text-align: left; padding: 12px; }
-.tabla td { padding: 12px; border-top: 1px solid var(--borde); }
-.acciones a { margin-right: 12px; color: var(--verde); font-weight: 600; }
 
-/* Formularios largos, botones secundarios y de peligro */
-.formulario-ancho { max-width: 640px; }
-.formulario select, .formulario textarea {
-  width: 100%; padding: 10px 12px; border: 1px solid var(--borde);
-  border-radius: 10px; font-size: 1rem; font-family: inherit; background: #fff;
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
 }
-.formulario select { min-height: 44px; }
-.formulario textarea:focus, .formulario select:focus { outline: 2px solid var(--ambar); }
-.error-campo { color: var(--error); font-size: 0.9rem; margin-top: 4px; }
-.acciones-form { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
-.acciones-form .boton { width: auto; margin-top: 0; }
-.boton-secundario { background: #fff; color: var(--verde); border: 1px solid var(--verde); }
-.boton-secundario:hover { background: var(--fondo); }
-.boton-peligro { background: var(--error); }
-.boton-peligro:hover { background: #962d22; }
-.bloque { margin: 20px 0; }
-.bloque h2 { font-size: 1.1rem; margin-top: 16px; }
+
+.filtros select,
+.filtros input {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  font-size: 1rem;
+  background: #fff;
+}
 
 /* El campo de semana necesita un poco más de ancho para mostrar su texto */
-.filtros input[type="number"] { width: 120px; }
+.filtros input[type="number"] {
+  width: 120px;
+}
 
+.tabla-contenedor {
+  overflow-x: auto; /* en celular la tabla se desplaza */
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--tarjeta);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.tabla th {
+  background: var(--verde);
+  color: #fff;
+  text-align: left;
+  padding: 12px;
+}
+
+.tabla td {
+  padding: 12px;
+  border-top: 1px solid var(--borde);
+}
+
+.acciones a {
+  margin-right: 12px;
+  color: var(--verde);
+  font-weight: 600;
+}
+
+/* Formularios largos, botones secundarios y de peligro */
+.formulario-ancho {
+  max-width: 640px;
+}
+
+.formulario select,
+.formulario textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: #fff;
+}
+
+.formulario select {
+  min-height: 44px;
+}
+
+.formulario textarea:focus,
+.formulario select:focus {
+  outline: 2px solid var(--ambar);
+}
+
+.error-campo {
+  color: var(--error);
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+.acciones-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.acciones-form .boton {
+  width: auto;
+  margin-top: 0;
+}
+
+.boton-secundario {
+  background: #fff;
+  color: var(--verde);
+  border: 1px solid var(--verde);
+}
+
+.boton-secundario:hover {
+  background: var(--fondo);
+}
+
+.boton-peligro {
+  background: var(--error);
+}
+
+.boton-peligro:hover {
+  background: #962d22;
+}
+
+.bloque {
+  margin: 20px 0;
+}
+
+.bloque h2 {
+  font-size: 1.1rem;
+  margin-top: 16px;
+}
 
 .formulario .acciones {
   display: flex;
@@ -150,18 +362,17 @@ a.boton-claro {
 }
 
 a.boton-secundario {
-  border: 2px solid #2F6B4F;
-  color: #2F6B4F;
+  border: 2px solid var(--verde);
+  color: var(--verde);
   background: transparent;
 }
 
 a.boton-secundario:hover {
-  background: #2F6B4F;
+  background: var(--verde);
   color: #FFFFFF;
 }
 
-
-
+/* ===== Opciones de asistencia ===== */
 .opciones-asistencia {
   display: flex;
   flex-wrap: wrap;
@@ -176,9 +387,7 @@ a.boton-secundario:hover {
   cursor: pointer;
 }
 
-
-
-/* Acciones en div: botones en fila */
+/* ===== Botones de acción en filas y contenedores ===== */
 div.acciones {
   display: flex;
   flex-wrap: wrap;
@@ -186,12 +395,10 @@ div.acciones {
   gap: 8px;
 }
 
-/* Acciones en tabla: sin partir líneas */
 td.acciones {
   white-space: nowrap;
 }
 
-/* Forma base de botón */
 .acciones a {
   display: inline-flex;
   align-items: center;
@@ -207,6 +414,7 @@ td.acciones {
   color: var(--verde);
   background: #fff;
   border: 2px solid var(--borde);
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
 /* Ver */
@@ -220,6 +428,7 @@ td.acciones {
   background: transparent;
   border-color: var(--verde);
 }
+
 .acciones a.boton-secundario:hover {
   background: var(--verde);
   color: #fff;
@@ -231,7 +440,258 @@ td.acciones {
   border-color: var(--error);
   color: var(--error);
 }
+
 .acciones a.boton-peligro:hover {
   background: var(--error);
   color: #fff;
+}
+
+/* ===== Panel principal y vistas con fondo educativo borroso y tarjetas translúcidas =====
+   Todo cuelga de body.pagina-panel. */
+body.pagina-panel {
+  min-height: 100vh;
+  background: var(--fondo);
+}
+
+/* La foto va en una capa fija detrás de todo, con desenfoque */
+body.pagina-panel::before {
+  content: "";
+  position: fixed;
+  inset: -20px;
+  z-index: -1;
+  background:
+    linear-gradient(rgba(250, 247, 240, 0.35), rgba(250, 247, 240, 0.65)),
+    url('../css/img/image.png') center / cover no-repeat,
+    radial-gradient(circle at 15% 20%, #F6E3B8 0, transparent 45%),
+    radial-gradient(circle at 85% 30%, #CFE3D6 0, transparent 50%),
+    var(--fondo);
+  filter: blur(3px);
+}
+
+body.pagina-panel .contenedor {
+  max-width: 1100px;
+  padding-top: 40px;
+}
+
+.panel-saludo {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.panel-saludo h1 {
+  margin: 0 0 4px;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+}
+
+.panel-saludo p {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--texto);
+}
+
+/* Tarjetas del panel: se acomodan solas (4, 2 o 1 por fila según el ancho) */
+.panel-tarjetas {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.panel-tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-top: 5px solid var(--ambar);
+  border-radius: 18px;
+  box-shadow: 0 6px 20px rgba(31, 42, 36, 0.12);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.panel-tarjeta:hover,
+.panel-tarjeta:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(31, 42, 36, 0.18);
+}
+
+.panel-tarjeta h2 {
+  margin: 8px 0 0;
+  font-size: 1.4rem;
+}
+
+.panel-tarjeta p {
+  margin: 0;
+  color: var(--texto-suave);
+}
+
+.panel-icono {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+}
+
+.panel-icono svg {
+  height: 64px;
+  width: auto;
+  flex-shrink: 0;
+}
+
+.panel-porcentaje {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.panel-porcentaje strong {
+  font-size: 1.6rem;
+  color: var(--verde);
+}
+
+.panel-porcentaje small {
+  color: var(--texto-suave);
+  font-size: 0.75rem;
+}
+
+.barra-mini {
+  display: block;
+  width: 90px;
+  height: 6px;
+  background: #E6E1D5;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.barra-mini i {
+  display: block;
+  height: 100%;
+  background: var(--ambar);
+}
+
+/* Bloque de actividad reciente */
+.panel-actividad {
+  margin-top: 24px;
+  padding: 20px 24px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 18px;
+  box-shadow: 0 6px 20px rgba(31, 42, 36, 0.12);
+}
+
+.panel-actividad h2 {
+  margin: 0 0 12px;
+  font-size: 1.3rem;
+}
+
+.panel-actividad ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px 32px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.panel-actividad li {
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-actividad li small {
+  color: var(--texto-suave);
+}
+
+/* ===== Secciones internas (Mis grupos, Planeaciones, etc.) con efecto translúcido ===== */
+body.pagina-panel .encabezado h1 {
+  margin: 0;
+  font-size: clamp(1.7rem, 4vw, 2.2rem);
+}
+
+.panel-seccion {
+  padding: 28px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 18px;
+  box-shadow: 0 6px 20px rgba(31, 42, 36, 0.12);
+}
+
+.panel-seccion .mensaje-info {
+  margin-top: 20px;
+  background: rgba(230, 240, 248, 0.88);
+  border: 1px solid rgba(47, 111, 163, 0.2);
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.panel-seccion .tabla-contenedor {
+  margin-top: 20px;
+  border-radius: 14px;
+  overflow-x: auto;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 4px 14px rgba(31, 42, 36, 0.06);
+}
+
+.panel-seccion .tabla {
+  background: rgba(255, 255, 255, 0.65);
+  border-radius: 14px;
+}
+
+.panel-seccion .tabla th {
+  background: var(--verde);
+  color: #fff;
+  padding: 14px 16px;
+  font-weight: 700;
+}
+
+.panel-seccion .tabla td {
+  padding: 14px 16px;
+  border-top: 1px solid rgba(31, 42, 36, 0.08);
+}
+
+.panel-seccion .tabla tbody tr {
+  transition: background 0.15s ease;
+}
+
+.panel-seccion .tabla tbody tr:hover {
+  background: rgba(255, 255, 255, 0.55);
+}
+
+/* Si el navegador no soporta el desenfoque, las superficies quedan más opacas */
+@supports not (backdrop-filter: blur(8px)) {
+  .panel-tarjeta,
+  .panel-actividad,
+  .panel-seccion {
+    background: rgba(255, 255, 255, 0.92);
+  }
+}
+
+/* ===== Login con fondo educativo borroso y tarjeta translúcida ===== */
+body.pagina-panel .login {
+  margin-top: 64px;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-top: 5px solid var(--ambar);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(31, 42, 36, 0.14);
+}
+
+body.pagina-panel .login .formulario input {
+  background: rgba(255, 255, 255, 0.92);
+}
+
+@supports not (backdrop-filter: blur(10px)) {
+  body.pagina-panel .login {
+    background: rgba(255, 255, 255, 0.94);
+  }
 }

@@ -1,16 +1,88 @@
 {# Panel principal: hereda la estructura de base.html #}
 {% extends 'base.html' %}
-{% block titulo %}Inicio · AulaRural{% endblock %}
-{% block contenido %}
-{# Saludo: usa el nombre del usuario o, si no tiene, su nombre de usuario #}
-<h1>Hola, {{ user.first_name|default:user.username }}</h1>
-<p class="texto-suave">¿Qué quieres hacer hoy?</p>
 
-{# Tarjetas de acceso a cada módulo #}
-<div class="tarjetas">
-  <a class="tarjeta" href="{% url 'grupos' %}"><h2>Grupos</h2><p>Estudiantes y cursos</p></a>
-  <a class="tarjeta" href="{% url 'planeaciones' %}"><h2>Planeaciones</h2><p>Prepara tus clases</p></a>
-  <a class="tarjeta" href="{% url 'asistencia' %}"><h2>Asistencia</h2><p>Registra por fecha</p></a>
-  <a class="tarjeta" href="{% url 'informes' %}"><h2>Informes</h2><p>Resumen por grupo</p></a>
-</div>
+{% block titulo %}Inicio · AulaRural{% endblock %}
+
+{# Esta clase activa el fondo y el diseño especial solo en el panel #}
+{% block clase_body %}pagina-panel{% endblock %}
+
+{% block contenido %}
+  {# Saludo: usa el nombre del usuario o, si no tiene, su nombre de usuario #}
+  <section class="panel-saludo">
+    <h1>Hola, {{ user.first_name|default:user.username|capfirst }}</h1>
+    <p>¿Qué quieres hacer hoy?</p>
+  </section>
+
+  {# Tarjetas de acceso a cada módulo, con ilustración SVG en cada una #}
+  <nav class="panel-tarjetas" aria-label="Módulos principales">
+    <a class="panel-tarjeta" href="{% url 'grupos' %}">
+      <div class="panel-icono">
+        <svg viewBox="0 0 64 48" aria-hidden="true">
+          <circle cx="14" cy="14" r="7" fill="#E9A23B" />
+          <path d="M2 40c0-10 5-16 12-16s12 6 12 16z" fill="#2F6B4F" />
+          <circle cx="32" cy="12" r="7" fill="#C97B4A" />
+          <path d="M20 40c0-11 5-17 12-17s12 6 12 17z" fill="#E9A23B" />
+          <circle cx="50" cy="14" r="7" fill="#8A5A3C" />
+          <path d="M38 40c0-10 5-16 12-16s12 6 12 16z" fill="#4E8FB8" />
+        </svg>
+      </div>
+      <h2>Grupos</h2>
+      <p>Gestiona estudiantes y cursos.</p>
+    </a>
+
+    <a class="panel-tarjeta" href="{% url 'planeaciones' %}">
+      <div class="panel-icono">
+        <svg viewBox="0 0 64 48" aria-hidden="true">
+          <rect x="4" y="3" width="56" height="34" rx="4" fill="#2F6B4F" />
+          <path d="M12 14h24M12 22h32M12 30h18" stroke="#fff" stroke-width="3" stroke-linecap="round" />
+          <rect x="2" y="40" width="60" height="4" rx="2" fill="#8A5A3C" />
+        </svg>
+      </div>
+      <h2>Planeaciones</h2>
+      <p>Organiza y prepara tus clases.</p>
+    </a>
+
+    <a class="panel-tarjeta" href="{% url 'asistencia' %}">
+      <div class="panel-icono">
+        <svg viewBox="0 0 64 48" aria-hidden="true">
+          <rect x="6" y="4" width="34" height="42" rx="4" fill="#fff" stroke="#2F6B4F" stroke-width="3" />
+          <path d="M13 16l4 4 7-8M13 32l4 4 7-8" stroke="#2F6B4F" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M28 18h6M28 34h6" stroke="#E9A23B" stroke-width="3" stroke-linecap="round" />
+        </svg>
+      </div>
+      <h2>Asistencia</h2>
+      <p>Registra y monitorea asistencias.</p>
+    </a>
+
+    <a class="panel-tarjeta" href="{% url 'informes' %}">
+      <div class="panel-icono">
+        <svg viewBox="0 0 64 48" aria-hidden="true">
+          <rect x="6" y="26" width="8" height="18" fill="#2F6B4F" />
+          <rect x="18" y="16" width="8" height="28" fill="#E9A23B" />
+          <rect x="30" y="8" width="8" height="36" fill="#4E8FB8" />
+          <circle cx="52" cy="18" r="10" fill="#E9A23B" />
+          <path d="M52 18V8a10 10 0 0 1 10 10z" fill="#2F6B4F" />
+        </svg>
+      </div>
+      <h2>Informes</h2>
+      <p>Analiza la asistencia del grupo.</p>
+    </a>
+  </nav>
+
+  {# Últimos movimientos del usuario #}
+  <section class="panel-actividad" aria-label="Actividad reciente">
+    <h2>Actividad reciente</h2>
+    {% if actividad %}
+      <ul>
+        {% for a in actividad %}
+          <li>
+            <span>{{ a.texto }}</span>
+            <small>{{ a.cuando|date:"d/m/Y, h:i a" }}</small>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="texto-suave">Todavía no hay actividad. Empieza creando un grupo o una planeación.</p>
+    {% endif %}
+  </section>
 {% endblock %}

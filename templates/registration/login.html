@@ -1,23 +1,29 @@
-{# Pantalla de inicio de sesión. Django la busca en registration/login.html #}
 {% extends 'base.html' %}
 {% block titulo %}Iniciar sesión · AulaRural{% endblock %}
+{% block clase_body %}pagina-panel{% endblock %}
+
 {% block contenido %}
-<div class="login">
+<section class="login">
   <h1>AulaRural</h1>
   <p class="texto-suave">Organiza tu trabajo docente en un solo lugar.</p>
 
+  {% if form.errors %}
+    <div class="mensaje mensaje-error">
+      Usuario o contraseña incorrectos. Inténtalo de nuevo.
+    </div>
+  {% endif %}
+
   <form method="post" class="formulario">
-    {# Token de seguridad obligatorio en los formularios POST #}
     {% csrf_token %}
-    {# Si los datos fallan, Django llena form.errors #}
-    {% if form.errors %}
-      <div class="mensaje mensaje-error">Usuario o contraseña incorrectos.</div>
-    {% endif %}
+
     <label for="id_username">Usuario</label>
-       <input type="text" name="username" id="id_username" autofocus required autocomplete="username">
+    <input type="text" name="username" id="id_username" autofocus required
+           value="{{ form.username.value|default:'' }}">
+
     <label for="id_password">Contraseña</label>
-        <input type="password" name="password" id="id_password" required autocomplete="current-password">
-    <button class="boton" type="submit">Entrar</button>
+    <input type="password" name="password" id="id_password" required>
+
+    <button type="submit" class="boton">Entrar</button>
   </form>
-</div>
+</section>
 {% endblock %}

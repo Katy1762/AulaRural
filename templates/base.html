@@ -14,7 +14,7 @@
   {# Hoja de estilos del proyecto, desde la carpeta static #}
   <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
 </head>
-<body>
+<body class="{% block clase_body %}{% endblock %}">
   {# La barra de navegación solo aparece si el usuario inició sesión #}
   {% if user.is_authenticated %}
   <header class="barra">
