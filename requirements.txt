@@ -8,3 +8,5 @@ tzdata==2026.6
 
 pytest==9.2.0
 pytest-django==4.14.0
+gunicorn==23.0.0
+whitenoise==6.9.0
