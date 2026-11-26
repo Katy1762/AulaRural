@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Asistencia sin conexión · AulaRural</title>
+  <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+</head>
+<body>
+<main class="contenedor">
+  {# Título y enlace para volver #}
+  <div class="encabezado">
+    <h1>Asistencia sin conexión</h1>
+    <div class="acciones">
+      <a class="boton-claro" href="{% url 'asistencia' %}">Ir a Asistencia</a>
+    </div>
+  </div>
+  <p id="conexion" class="texto-suave"></p>
+    <p data-estado-sync class="texto-suave"></p>
+
+  {# Aviso cuando el equipo no fue preparado #}
+  <p id="aviso-vacio" class="mensaje mensaje-info" hidden>
+    Este equipo no tiene grupos guardados. Con internet, entra a Asistencia y pulsa «Preparar para usar sin conexión».
+  </p>
+
+  {# Selección de grupo y fecha #}
+  <div id="captura" hidden>
+    <div class="filtros">
+      <label for="grupo">Grupo</label>
+      <select id="grupo"></select>
+      <label for="fecha">Fecha</label>
+      <input type="date" id="fecha">
+    </div>
+
+    {# Estudiantes del grupo #}
+    <div class="tabla-contenedor">
+      <table class="tabla">
+        <thead><tr><th>Estudiante</th><th>Estado</th></tr></thead>
+        <tbody id="cuerpo-tabla"></tbody>
+      </table>
+    </div>
+
+    <div class="acciones-form">
+      <button type="button" id="btn-guardar" class="boton">Guardar en este equipo</button>
+    </div>
+    <p id="mensaje" class="texto-suave"></p>
+    <p id="pendientes" class="texto-suave"></p>
+  </div>
+</main>
+<script src="{% static 'js/sincronizar.js' %}"></script>
+<script src="{% static 'js/asistencia_offline.js' %}"></script>
+</body>
+</html>

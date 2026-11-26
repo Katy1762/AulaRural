@@ -16,6 +16,9 @@
   <div class="tarjeta">
     <button type="button" id="btn-preparar" class="boton">Preparar para usar sin conexión</button>
     <p id="estado-preparar" class="texto-suave"></p>
+        <p data-estado-sync class="texto-suave"></p>
+        {# Acceso directo a la pantalla de captura local #}
+    <a class="boton-claro" href="{% url 'asistencia_sin_conexion' %}">Pasar lista sin conexión</a>
   </div>
 {% endif %}
 
@@ -50,6 +53,7 @@
 {# Script del modo sin conexión: solo para el docente #}
 {% if es_directivo != 'directivo' %}
 <script src="{% static 'js/sin_conexion.js' %}"></script>
+<script src="{% static 'js/sincronizar.js' %}"></script>
 {% endif %}
 {% endwith %}
 {% endblock %}

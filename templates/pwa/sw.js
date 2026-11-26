@@ -5,8 +5,11 @@ const CACHE = 'aularural-{{ version }}';
 // Archivos que se guardan al instalar para que la app abra sin internet
 const BASICOS = [
   '/sin-conexion/',
+  '/asistencia/sin-conexion/',
   '{% static "css/estilos.css" %}',
   '{% static "img/icon-192.png" %}',
+  '{% static "js/asistencia_offline.js" %}',
+  '{% static "js/sincronizar.js" %}',
 ];
 
 // Instalación: guarda los archivos básicos
@@ -57,10 +60,13 @@ self.addEventListener('fetch', (evento) => {
   }
 
   // Páginas: siempre de la red. Las páginas con datos personales no se guardan.
-  // Sin internet se muestra la página de aviso.
+  // Sin internet, Asistencia abre la pantalla de captura local y el resto el aviso
   if (peticion.mode === 'navigate') {
+    const alternativa = url.pathname.startsWith('/asistencia/')
+      ? '/asistencia/sin-conexion/'
+      : '/sin-conexion/';
     evento.respondWith(
-      fetch(peticion).catch(() => caches.match('/sin-conexion/'))
+      fetch(peticion).catch(() => caches.match(alternativa))
     );
   }
 });

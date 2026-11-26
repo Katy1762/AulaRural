@@ -3,8 +3,7 @@ from django.shortcuts import render
 from django.templatetags.static import static
 
 # Versión de la caché: sube el número cuando cambies los archivos que guarda el service worker
-VERSION_CACHE = 'v1'
-
+VERSION_CACHE = 'v3'
 
 # Manifiesto: describe la app para poder instalarla en el celular
 def manifiesto(request):
