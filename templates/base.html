@@ -30,7 +30,7 @@
       <a href="{% url 'informes' %}">Informes</a>
     </nav>
     {# Salir usa POST y token CSRF por seguridad #}
-    <form method="post" action="{% url 'logout' %}">
+    <form method="post" action="{% url 'logout' %}" id="form-salir">
       {% csrf_token %}
       <button class="boton boton-claro" type="submit">Salir</button>
     </form>
@@ -48,5 +48,8 @@
     {% block contenido %}{% endblock %}
   </main>
   <script src="{% static 'js/pwa.js' %}"></script>
+  {% if user.is_authenticated %}
+  <script src="{% static 'js/limpiar_sesion.js' %}"></script>
+  {% endif %}
 </body>
 </html>
