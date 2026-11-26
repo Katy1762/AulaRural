@@ -36,19 +36,22 @@ if not SECRET_KEY:
 # Direcciones desde las que se permite servir la app
 ALLOWED_HOSTS = env_lista('ALLOWED_HOSTS', '127.0.0.1,localhost')
 
-# Orígenes de confianza para formularios en HTTPS, por ejemplo https://usuario.pythonanywhere.com
+# Orígenes de confianza para formularios en HTTPS, por ejemplo https://usuario.up.railway.app
 CSRF_TRUSTED_ORIGINS = env_lista('CSRF_TRUSTED_ORIGINS')
 
-# Seguridad en producción: se activa desde el .env del servidor
+# Seguridad en producción: se activa desde las variables del servidor
 COOKIES_SEGURAS = env_bool('COOKIES_SEGURAS', False)
 SESSION_COOKIE_SECURE = COOKIES_SEGURAS
 CSRF_COOKIE_SECURE = COOKIES_SEGURAS
 
 FORZAR_HTTPS = env_bool('FORZAR_HTTPS', False)
 SECURE_SSL_REDIRECT = FORZAR_HTTPS
+# Railway ya maneja el HTTPS; sin esto Django redirige sin parar
+if FORZAR_HTTPS:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_HSTS_SECONDS = 3600 if FORZAR_HTTPS else 0
 # Avisos aceptados: HSTS con subdominios y preload no aplican a una dirección
-# compartida (usuario.pythonanywhere.com), porque el dominio base no es nuestro.
+# compartida (usuario.up.railway.app), porque el dominio base no es nuestro.
 # Si más adelante se usa un dominio propio, hay que revisarlos.
 SILENCED_SYSTEM_CHECKS = ['security.W005', 'security.W021']
 
@@ -69,7 +72,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',   # sirve el CSS y las imágenes en producción
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
